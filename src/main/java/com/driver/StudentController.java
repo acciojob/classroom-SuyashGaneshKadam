@@ -22,13 +22,13 @@ public class StudentController {
     StudentService studentService = new StudentService();
     @PostMapping("/add-student")
     public ResponseEntity<String> addStudent(@RequestBody Student student){
-        //studentService.addStudent(student);
+        studentService.addStudent(student);
         return new ResponseEntity<>("New student added successfully", HttpStatus.CREATED);
     }
 
     @PostMapping("/add-teacher")
     public ResponseEntity<String> addTeacher(@RequestBody Teacher teacher){
-        //studentService.addTeacher(teacher);
+        studentService.addTeacher(teacher);
         return new ResponseEntity<>("New teacher added successfully", HttpStatus.CREATED);
     }
 
