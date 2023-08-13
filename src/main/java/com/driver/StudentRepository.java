@@ -11,7 +11,6 @@ public class StudentRepository {
     HashMap<String, Student> studentDb = new HashMap<>();
     HashMap<String, Teacher> teacherDb = new HashMap<>();
     HashMap<String, List<Student>> teacherStudentDb = new HashMap<>();
-    HashMap<String, List<Teacher>> studentTeacherDb = new HashMap<>();
 
     public void addStudent(Student student){
         studentDb.put(student.getName(), student);
@@ -25,43 +24,21 @@ public class StudentRepository {
     }
     public HashMap<String, Teacher> getTeacherDb() { return teacherDb; }
 
-    public void setStudentDb(HashMap<String, Student> studentDb) {
-        this.studentDb = studentDb;
-    }
-
-    public void setTeacherDb(HashMap<String, Teacher> teacherDb) {
-        this.teacherDb = teacherDb;
-    }
-
-    public void setTeacherStudentDb(HashMap<String, List<Student>> teacherStudentDb) {
-        this.teacherStudentDb = teacherStudentDb;
-    }
-
-    public void setStudentTeacherDb(HashMap<String, List<Teacher>> studentTeacherDb) {
-        this.studentTeacherDb = studentTeacherDb;
-    }
-
+    public void setTeacherDb(HashMap<String, Teacher> teacherDb) { this.teacherDb = teacherDb; }
+    public void setTeacherStudentDb(HashMap<String, List<Student>> teacherStudentDb) { this.teacherStudentDb = teacherStudentDb; }
     public HashMap<String, List<Student>> getTeacherStudentDb()
     {
         return teacherStudentDb;
-    }
-    public HashMap<String, List<Teacher>> getStudentTeacherDb()
-    {
-        return studentTeacherDb;
     }
     public void addStudentTeacherPair(String teacherName, String studentName){
         if(!studentDb.containsKey(studentName) || !teacherDb.containsKey(teacherName)) return;
         Student student = studentDb.get(studentName);
         Teacher teacher = teacherDb.get(teacherName);
-        List<Student> list = new ArrayList<>();
         List<Student> students = teacherStudentDb.getOrDefault(teacherName, new ArrayList<>());
-        List<Teacher> teachers = studentTeacherDb.getOrDefault(studentName, new ArrayList<>());
-        if(students.contains(student) || teachers.contains(teacher)) return;
+        if(students.contains(student)) return;
         teacher.setNumberOfStudents(teacher.getNumberOfStudents()+1);
         students.add(student);
-        teachers.add(teacher);
         teacherStudentDb.put(teacherName, students);
-        studentTeacherDb.put(studentName, teachers);
         teacherDb.put(teacherName, teacher);
     }
 }

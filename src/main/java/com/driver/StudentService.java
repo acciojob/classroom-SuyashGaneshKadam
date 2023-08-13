@@ -68,39 +68,26 @@ public class StudentService {
     public void deleteTeacherByName(@RequestParam String teacherName){
         HashMap<String, Teacher> teacherDb = studentRepository.getTeacherDb();
         HashMap<String, List<Student>> teacherStudentDb = studentRepository.getTeacherStudentDb();
-        HashMap<String, List<Teacher>> studentTeacherDb = studentRepository.getStudentTeacherDb();
 
         if(teacherDb.size() == 0 || !teacherDb.containsKey(teacherName)) return;
-        Teacher teacher = teacherDb.get(teacherName);
         teacherDb.remove(teacherName);
 
         if(teacherStudentDb.size() == 0 || !teacherStudentDb.containsKey(teacherName)) return;
-        List<Student> students = teacherStudentDb.get(teacherName);
         teacherStudentDb.remove(teacherName);
 
-        for(Student student : students){
-            String studentName = student.getName();
-            List<Teacher> teachers = studentTeacherDb.get(studentName);
-            teachers.remove(teacher);
-            studentTeacherDb.put(studentName, teachers);
-        }
         studentRepository.setTeacherDb(teacherDb);
         studentRepository.setTeacherStudentDb(teacherStudentDb);
-        studentRepository.setStudentTeacherDb(studentTeacherDb);
     }
     public void deleteAllTeachers(){
         HashMap<String, Teacher> teacherDb = studentRepository.getTeacherDb();
         HashMap<String, List<Student>> teacherStudentDb = studentRepository.getTeacherStudentDb();
-        HashMap<String, List<Teacher>> studentTeacherDb = studentRepository.getStudentTeacherDb();
 
         if(teacherDb.size() == 0 || teacherStudentDb.size() == 0) return;
 
         teacherDb.clear();
         teacherStudentDb.clear();
-        studentTeacherDb.clear();
 
         studentRepository.setTeacherDb(teacherDb);
         studentRepository.setTeacherStudentDb(teacherStudentDb);
-        studentRepository.setStudentTeacherDb(studentTeacherDb);
     }
 }
