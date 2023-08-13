@@ -23,9 +23,6 @@ public class StudentRepository {
         return studentDb;
     }
     public HashMap<String, Teacher> getTeacherDb() { return teacherDb; }
-
-    public void setTeacherDb(HashMap<String, Teacher> teacherDb) { this.teacherDb = teacherDb; }
-    public void setTeacherStudentDb(HashMap<String, List<Student>> teacherStudentDb) { this.teacherStudentDb = teacherStudentDb; }
     public HashMap<String, List<Student>> getTeacherStudentDb()
     {
         return teacherStudentDb;
@@ -40,5 +37,19 @@ public class StudentRepository {
         students.add(student);
         teacherStudentDb.put(teacherName, students);
         teacherDb.put(teacherName, teacher);
+    }
+
+    public void deleteTeacherByName(String teacherName){
+        if(teacherDb.size() == 0 || !teacherDb.containsKey(teacherName)) return;
+        teacherDb.remove(teacherName);
+
+        if(teacherStudentDb.size() == 0 || !teacherStudentDb.containsKey(teacherName)) return;
+        teacherStudentDb.remove(teacherName);
+    }
+    public void deleteAllTeachers(){
+        if(teacherDb.size() == 0 || teacherStudentDb.size() == 0) return;
+
+        teacherDb = new HashMap<>();
+        teacherStudentDb = new HashMap<>();
     }
 }

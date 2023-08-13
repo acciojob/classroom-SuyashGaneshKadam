@@ -66,28 +66,9 @@ public class StudentService {
         return studentNames;
     }
     public void deleteTeacherByName(@RequestParam String teacherName){
-        HashMap<String, Teacher> teacherDb = studentRepository.getTeacherDb();
-        HashMap<String, List<Student>> teacherStudentDb = studentRepository.getTeacherStudentDb();
-
-        if(teacherDb.size() == 0 || !teacherDb.containsKey(teacherName)) return;
-        teacherDb.remove(teacherName);
-
-        if(teacherStudentDb.size() == 0 || !teacherStudentDb.containsKey(teacherName)) return;
-        teacherStudentDb.remove(teacherName);
-
-        studentRepository.setTeacherDb(teacherDb);
-        studentRepository.setTeacherStudentDb(teacherStudentDb);
+        studentRepository.deleteTeacherByName(teacherName);
     }
     public void deleteAllTeachers(){
-        HashMap<String, Teacher> teacherDb = studentRepository.getTeacherDb();
-        HashMap<String, List<Student>> teacherStudentDb = studentRepository.getTeacherStudentDb();
-
-        if(teacherDb.size() == 0 || teacherStudentDb.size() == 0) return;
-
-        teacherDb.clear();
-        teacherStudentDb.clear();
-
-        studentRepository.setTeacherDb(teacherDb);
-        studentRepository.setTeacherStudentDb(teacherStudentDb);
+        studentRepository.deleteAllTeachers();
     }
 }
