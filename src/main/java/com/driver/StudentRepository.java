@@ -1,10 +1,7 @@
 package com.driver;
 
-import org.springframework.stereotype.Repository;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import org.springframework.stereotype.*;
+import java.util.*;
 
 @Repository
 public class StudentRepository {
@@ -44,12 +41,20 @@ public class StudentRepository {
         teacherDb.remove(teacherName);
 
         if(teacherStudentDb.size() == 0 || !teacherStudentDb.containsKey(teacherName)) return;
+        for(Student student : teacherStudentDb.get(teacherName)){
+            studentDb.remove(student.getName());
+        }
         teacherStudentDb.remove(teacherName);
     }
     public void deleteAllTeachers(){
         if(teacherDb.size() == 0 || teacherStudentDb.size() == 0) return;
 
         teacherDb = new HashMap<>();
+        for(String teacherName : teacherStudentDb.keySet()){
+            for(Student student : teacherStudentDb.get(teacherName)){
+                studentDb.remove(student.getName());
+            }
+        }
         teacherStudentDb = new HashMap<>();
     }
 }
